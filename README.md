@@ -12,14 +12,14 @@ This setup is divided into two phases:
 
 This phase focuses on installing and configuring Eclipse Ditto, which will serve as the foundation for managing digital twins of your assets.
 
-**Install and Configure Eclipse Ditto:** ([Source: Eclipse Ditto README](https://github.com/eclipse-ditto/ditto/README.md))
+**Install and Configure Eclipse Ditto:** ([Source: Eclipse Ditto README](https://github.com/eclipse-ditto/ditto))
 
 **Step 1.1: Clone Eclipse Ditto**
 
 Clone the Eclipse Ditto repository to your server or cloud environment. Open a new terminal and execute the following command:
 
 ```bash
-git clone [https://github.com/eclipse-ditto/ditto.git](https://github.com/eclipse-ditto/ditto.git)
+git clone https://github.com/eclipse-ditto/ditto.git
 ```
 
 **Step 1.2: Configure and Deploy Ditto with Docker Compose**
@@ -67,14 +67,14 @@ Add the ROS 2 sourcing command to your shell startup script to automatically set
 echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 ```
 
-**Install and Configure `ditto_ros_bridge`:** ([Source: ditto\_ros\_bridge README](https://github.com/virtualaichina/ditto_ros_bridge/README.md))
+**Install and Configure `ditto_ros_bridge`:** ([Source: ditto\_ros\_bridge README](https://github.com/virtualaichina/ditto_ros_bridge))
 
 **Step 4.1: Clone and Build `ditto_ros_bridge`**
 
 Clone the `ditto_ros_bridge` package, build it using `colcon`, and source the setup file.
 
 ```bash
-git clone [https://github.com/virtualaichina/ditto_ros_bridge](https://github.com/virtualaichina/ditto_ros_bridge)
+git clone https://github.com/virtualaichina/ditto_ros_bridge
 cd ditto_ros_bridge
 colcon build
 source install/setup.bash

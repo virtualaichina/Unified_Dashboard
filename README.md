@@ -1,5 +1,3 @@
-\`\`\`markdown
-
 # Unified Dashboard in Virtual Studio for IoT Data Monitoring
 
 ## Overview
@@ -157,6 +155,3 @@ You can now add various panels in Virtual Studio, such as raw message panels, to
 *(If `panels.png` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
 
 Congratulations\! You have successfully set up a unified dashboard in Virtual Studio to monitor data from various sources using Eclipse Ditto, ROS 2, and related bridges. You can now customize your dashboard further by adding more panels and connecting additional data sources.
-
-```
-```

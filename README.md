@@ -1,113 +1,162 @@
-```markdown
-# Unified Dashboard with Eclipse Ditto, ROS 2, and Virtual Studio
+\`\`\`markdown
 
-This guide provides a step-by-step process to create a unified dashboard in Virtual Studio for monitoring data from various sources, including IoT devices and production machines, using Eclipse Ditto, ROS 2, and The Things Network (TTN).
+# Unified Dashboard in Virtual Studio for IoT Data Monitoring
+
+## Overview
+
+This guide provides a step-by-step process to create a unified dashboard in Virtual Studio for monitoring data from various sources, including IoT devices and production machines. The setup leverages Eclipse Ditto for digital twin management, ROS 2 for robotic data integration, and The Things Network (TTN) for IoT device connectivity.
 
 ## Core Infrastructure Setup
 
+This setup is divided into two phases:
+
 ### Phase 1: Setting up Eclipse Ditto
 
-**Install and Configure Eclipse Ditto:** (Source: [Eclipse Ditto README](https://github.com/eclipse-ditto/ditto/README.md))
+This phase focuses on installing and configuring Eclipse Ditto, which will serve as the foundation for managing digital twins of your assets.
 
-1.  **Clone Eclipse Ditto:**
-    ```bash
-    git clone [https://github.com/eclipse-ditto/ditto.git](https://github.com/eclipse-ditto/ditto.git)
-    ```
-2.  **Configure Ditto with Docker Compose:**
-    ```bash
-    cd ditto/deployment/docker/
-    docker-compose up -d
-    ```
-3.  **Verify Ditto is running:**
-    ```bash
-    docker-compose logs -f
-    ```
+**Install and Configure Eclipse Ditto:** ([Source: Eclipse Ditto README](https://github.com/eclipse-ditto/ditto/README.md))
 
-    You should now have the following running:
-    * MongoDB (backing datastore)
-    * Ditto microservices:
-        * Policies
-        * Things
-        * Things-Search
-        * Gateway
-        * Connectivity
+**Step 1.1: Clone Eclipse Ditto**
 
-### Phase 2: Connecting to ROS 2 and Visualizing Data
+Clone the Eclipse Ditto repository to your server or cloud environment. Open a new terminal and execute the following command:
+
+```bash
+git clone [https://github.com/eclipse-ditto/ditto.git](https://github.com/eclipse-ditto/ditto.git)
+```
+
+**Step 1.2: Configure and Deploy Ditto with Docker Compose**
+
+Navigate to the Docker deployment directory and use Docker Compose to start Ditto.
+
+```bash
+cd ditto/deployment/docker/
+docker-compose up -d
+```
+
+**Step 1.3: Verify Ditto is Running**
+
+Check the logs to ensure Ditto services are running correctly.
+
+```bash
+docker-compose logs -f
+```
+
+Upon successful setup, you will have the following components running:
+
+  * **MongoDB:**  Backing datastore for Eclipse Ditto (deployed via Docker).
+  * **Ditto Microservices:**
+      * Policies
+      * Things
+      * Things-Search
+      * Gateway
+      * Connectivity
+
+### Phase 2: Connecting to ROS 2 and Visualizing Data in Virtual Studio
+
+This phase involves setting up ROS 2, bridging it with Eclipse Ditto, and configuring Virtual Studio for data visualization.
 
 **Install and Configure ROS 2:**
 
-1.  **Install ROS 2 Jazzy:**
-    * This demo uses ROS 2 Jazzy running on Ubuntu 24.04 Noble.
-2.  **Add sourcing to your shell startup script:**
-    ```bash
-    echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
-    ```
+**Step 3.1: Install ROS 2**
 
-**Install and Configure `ditto_ros_bridge`:** (Source: [ditto\_ros\_bridge README](https://github.com/virtualaichina/ditto_ros_bridge/README.md))
+Install ROS 2 on your system. This guide uses ROS 2 Jazzy running on Ubuntu 24 Noble. Refer to the [official ROS 2 documentation](https://www.google.com/url?sa=E&source=gmail&q=https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debians.html) for detailed installation instructions.
 
-1.  **Clone and build the `ditto_ros_bridge` package:**
-    ```bash
-    git clone [https://github.com/virtualaichina/ditto_ros_bridge](https://github.com/virtualaichina/ditto_ros_bridge)
-    cd ditto_ros_bridge
-    colcon build
-    source install/setup.bash
-    sudo apt install python3-aiohttp
-    ros2 launch ditto_ros_bridge bridge.launch.py
-    ```
-    Now, the `ditto_ros_bridge` is running.
+**Step 3.2: Source ROS 2 Environment**
 
-**Install and Configure `rosbridge_server`:**
+Add the ROS 2 sourcing command to your shell startup script to automatically set up the ROS 2 environment in new terminals.
 
-1.  **Install the `rosbridge_server` package:**
-    ```bash
-    sudo apt install ros-jazzy-rosbridge-server
-    ```
-2.  **Run the `rosbridge_server`:** (Ensure you are in the `ditto_ros_bridge` directory and have sourced `install/setup.bash`)
-    ```bash
-    cd ditto_ros_bridge/
-    source install/setup.bash
-    ros2 launch rosbridge_server rosbridge_websocket_launch.xml
-    ```
-    The Rosbridge WebSocket server is now started on port 9090.
+```bash
+echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+```
+
+**Install and Configure `ditto_ros_bridge`:** ([Source: ditto\_ros\_bridge README](https://github.com/virtualaichina/ditto_ros_bridge/README.md))
+
+**Step 4.1: Clone and Build `ditto_ros_bridge`**
+
+Clone the `ditto_ros_bridge` package, build it using `colcon`, and source the setup file.
+
+```bash
+git clone [https://github.com/virtualaichina/ditto_ros_bridge](https://github.com/virtualaichina/ditto_ros_bridge)
+cd ditto_ros_bridge
+colcon build
+source install/setup.bash
+sudo apt install python3-aiohttp
+ros2 launch ditto_ros_bridge bridge.launch.py
+```
+
+Now, the `ditto-ros-bridge` is running and facilitating communication between ROS 2 and Eclipse Ditto.
+
+**Install and Configure `ros_bridge`:**
+
+**Step 5.1: Install `ros_bridge`**
+
+Install the `ros_bridge` package to connect ROS 2 to Virtual Studio.
+
+```bash
+sudo apt install ros-jazzy-rosbridge-server
+```
+
+**Step 5.2: Launch `ros_bridge` WebSocket Server**
+
+Run the `ros_bridge` WebSocket server. Ensure you are in the `ditto_ros_bridge` directory and have sourced `install/setup.bash` to ensure proper message type recognition. Open a new terminal and execute:
+
+```bash
+cd ditto_ros_bridge/
+source install/setup.bash
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+```
+
+The Rosbridge WebSocket server is now started and listening on port `9090`.
 
 **Set Up Virtual Studio:**
 
-1.  **Install and launch Virtual Studio:**
-    ```bash
-    sudo docker pull docker.io/virtualaichina/virtual-studio:v1.0
-    sudo docker run -p "8002:8002" virtualaichina/virtual-studio:v1.0
-    ```
-    Open your web browser and navigate to `http://localhost:8002`.
-2.  **Connect Virtual Studio to `rosbridge_server`:**
-    * Click the Virtual Studio icon (menu) -> Open connection.
-    * In the popup dialog, choose Rosbridge.
-    * Enter `ws://localhost:9090`.
+**Step 6.1: Install and Launch Virtual Studio**
+
+Install and run Virtual Studio using Docker.
+
+```bash
+sudo docker pull docker.io/virtualaichina/virtual-studio:v1.0
+sudo docker run -p "8002:8002" virtualaichina/virtual-studio:v1.0
+```
+
+Open your web browser and navigate to `http://localhost:8002`. Welcome to Virtual Studio\!
+
+**Step 6.2: Connect Virtual Studio to `ros_bridge`**
+
+Connect Virtual Studio to the `ros_bridge` WebSocket server. In Virtual Studio, click on the menu (Virtual Studio icon) -\> **Open connection**. In the popup dialog, choose **Rosbridge** and enter the following URL:
+
+```
+ws://localhost:9090
+```
 
 ## Industrial Manufacturing Simulation and Testing
 
-**Simulate industrial manufacturing data using `smart_manufacturing_sim.py`:**
+**Simulate Industrial Manufacturing Data:**
 
-1.  **Navigate to the `ditto_ros_bridge` directory:**
-    ```bash
-    cd ditto_ros_bridge/
-    ```
-2.  **Run the simulation script:**
-    ```bash
-    python3 smart_manufacturing_sim.py
-    ```
+Use the `smart_manufacturing_sim.py` script to simulate industrial manufacturing data and publish it to ROS 2 topics.
 
-**Verify ROS topics in Virtual Studio:**
+Open a new terminal, navigate to the `ditto_ros_bridge` directory, and run the script:
 
-* Click "Topics" in the left panel of Virtual Studio.
-* You should see the industrial manufacturing ROS topics.
+```bash
+cd ditto_ros_bridge/
+python3 smart_manufacturing_sim.py
+```
 
-    ![Ros Topics](ros_topics.png)
+**Verify ROS 2 Topics in Virtual Studio:**
 
-**Add panels to monitor data:**
+If the setup is successful, you should see the industrial manufacturing ROS 2 topics in Virtual Studio. Click on "Topics" in the left panel of Virtual Studio.
 
-* Add raw message panels or other suitable panels to Virtual Studio.
-* Listen to the topics you want to monitor.
-* The simulation script updates industrial data in Eclipse Ditto, which is reflected in your panels.
+![ROS Topics](about:sanitized)
+*(If `ros_topics.JPG` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
 
-    ![Panels](panels.png)
+**Visualize Data with Virtual Studio Panels:**
+
+You can now add various panels in Virtual Studio, such as raw message panels, to monitor the ROS 2 topics. The `smart_manufacturing_sim.py` script periodically updates industrial data in Eclipse Ditto, which is then reflected in your Virtual Studio dashboard.
+
+![Virtual Studio Panels](about:sanitized)
+*(If `panels.JPG` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
+
+Congratulations\! You have successfully set up a unified dashboard in Virtual Studio to monitor data from various sources using Eclipse Ditto, ROS 2, and related bridges. You can now customize your dashboard further by adding more panels and connecting additional data sources.
+
+```
 ```

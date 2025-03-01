@@ -55,11 +55,11 @@ This phase involves setting up ROS 2, bridging it with Eclipse Ditto, and config
 
 **Install and Configure ROS 2:**
 
-**Step 3.1: Install ROS 2**
+**Step 2.1: Install ROS 2**
 
 Install ROS 2 on your system. This guide uses ROS 2 Jazzy running on Ubuntu 24 Noble. Refer to the [official ROS 2 documentation](https://www.google.com/url?sa=E&source=gmail&q=https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debians.html) for detailed installation instructions.
 
-**Step 3.2: Source ROS 2 Environment**
+**Step 2.2: Source ROS 2 Environment**
 
 Add the ROS 2 sourcing command to your shell startup script to automatically set up the ROS 2 environment in new terminals.
 
@@ -69,12 +69,12 @@ echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
 
 **Install and Configure `ditto_ros_bridge`:** ([Source: ditto\_ros\_bridge README](https://github.com/virtualaichina/ditto_ros_bridge))
 
-**Step 4.1: Clone and Build `ditto_ros_bridge`**
+**Step 3.1: Clone and Build `ditto_ros_bridge`**
 
 Clone the `ditto_ros_bridge` package, build it using `colcon`, and source the setup file.
 
 ```bash
-git clone https://github.com/virtualaichina/ditto_ros_bridge
+git clone https://github.com/virtualaichina/ditto_ros_bridge.git
 cd ditto_ros_bridge
 colcon build
 source install/setup.bash
@@ -86,7 +86,7 @@ Now, the `ditto-ros-bridge` is running and facilitating communication between RO
 
 **Install and Configure `ros_bridge`:**
 
-**Step 5.1: Install `ros_bridge`**
+**Step 4.1: Install `ros_bridge`**
 
 Install the `ros_bridge` package to connect ROS 2 to Virtual Studio.
 
@@ -94,7 +94,7 @@ Install the `ros_bridge` package to connect ROS 2 to Virtual Studio.
 sudo apt install ros-jazzy-rosbridge-server
 ```
 
-**Step 5.2: Launch `ros_bridge` WebSocket Server**
+**Step 4.2: Launch `ros_bridge` WebSocket Server**
 
 Run the `ros_bridge` WebSocket server. Ensure you are in the `ditto_ros_bridge` directory and have sourced `install/setup.bash` to ensure proper message type recognition. Open a new terminal and execute:
 
@@ -108,7 +108,7 @@ The Rosbridge WebSocket server is now started and listening on port `9090`.
 
 **Set Up Virtual Studio:**
 
-**Step 6.1: Install and Launch Virtual Studio**
+**Step 5.1: Install and Launch Virtual Studio**
 
 Install and run Virtual Studio using Docker.
 
@@ -119,7 +119,7 @@ sudo docker run -p "8002:8002" virtualaichina/virtual-studio:v1.0
 
 Open your web browser and navigate to `http://localhost:8002`. Welcome to Virtual Studio\!
 
-**Step 6.2: Connect Virtual Studio to `ros_bridge`**
+**Step 5.2: Connect Virtual Studio to `ros_bridge`**
 
 Connect Virtual Studio to the `ros_bridge` WebSocket server. In Virtual Studio, click on the menu (Virtual Studio icon) -\> **Open connection**. In the popup dialog, choose **Rosbridge** and enter the following URL:
 

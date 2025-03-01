@@ -147,14 +147,14 @@ python3 smart_manufacturing_sim.py
 If the setup is successful, you should see the industrial manufacturing ROS 2 topics in Virtual Studio. Click on "Topics" in the left panel of Virtual Studio.
 
 ![ROS Topics](about:sanitized)
-*(If `ros_topics.JPG` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
+*(If `ros_topics.png` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
 
 **Visualize Data with Virtual Studio Panels:**
 
 You can now add various panels in Virtual Studio, such as raw message panels, to monitor the ROS 2 topics. The `smart_manufacturing_sim.py` script periodically updates industrial data in Eclipse Ditto, which is then reflected in your Virtual Studio dashboard.
 
 ![Virtual Studio Panels](about:sanitized)
-*(If `panels.JPG` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
+*(If `panels.png` is in the same repository, this will display the image. Otherwise, replace with a valid image URL or remove if not available.)*
 
 Congratulations\! You have successfully set up a unified dashboard in Virtual Studio to monitor data from various sources using Eclipse Ditto, ROS 2, and related bridges. You can now customize your dashboard further by adding more panels and connecting additional data sources.
 

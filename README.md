@@ -101,7 +101,7 @@ This guide provides a step-by-step process to create a unified dashboard in Virt
 * Click "Topics" in the left panel of Virtual Studio.
 * You should see the industrial manufacturing ROS topics.
 
-    ![Ros Topics](ros_topics.JPG)
+    ![Ros Topics](ros_topics.png)
 
 **Add panels to monitor data:**
 
@@ -109,5 +109,5 @@ This guide provides a step-by-step process to create a unified dashboard in Virt
 * Listen to the topics you want to monitor.
 * The simulation script updates industrial data in Eclipse Ditto, which is reflected in your panels.
 
-    ![Panels](panels.JPG)
+    ![Panels](panels.png)
 ```
